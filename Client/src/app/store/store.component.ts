@@ -16,8 +16,8 @@ export class StoreComponent implements OnInit {
   products: Product[];
 
   sellers: String[];
-  
-  
+
+
 
   settings = {
     delete: {
@@ -82,7 +82,7 @@ export class StoreComponent implements OnInit {
         title: 'updatedAt',
         editable: false,
         valuePrepareFunction: (date) => {
-          if(date == "")
+          if (date == "")
             return "";
           var raw = new Date(date);
 
@@ -123,8 +123,21 @@ export class StoreComponent implements OnInit {
   }
 
   onCreateConfirm(event) {
+    var flag = 0;
+    for (let seller of this.sellers)
+      if (seller == event.newData.sellerName)
+        flag = 1;
+    if (!flag) {
+      event.confirm.reject();
+      return;
+    }
     this.storeService.createProduct(event.newData).subscribe(
-      response => response.err == null ? event.confirm.resolve(response.data) : event.confirm.reject()
+      response => {
+        if (response.err == null)
+          event.confirm.resolve(response.data);
+        else
+          event.confirm.reject()
+      }
     );
   }
 
@@ -135,11 +148,11 @@ export class StoreComponent implements OnInit {
     );
   }
 
-  filterProducts(products: Product[]): Product[]{
+  filterProducts(products: Product[]): Product[] {
     var returnValue = [];
-    for(var i = 0; i<products.length; i++){
+    for (var i = 0; i < products.length; i++) {
       var product = products[i];
-      if (this.sellers.indexOf(product.sellerName) >= 0){
+      if (this.sellers.indexOf(product.sellerName) >= 0) {
         returnValue.push(product);
       }
     }
