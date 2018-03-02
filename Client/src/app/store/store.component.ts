@@ -102,7 +102,7 @@ export class StoreComponent implements OnInit {
   ngOnInit() {
     this.sellers = [
       'Wessam',
-      'Maqarious',
+      'Maqarios',
       'Nesrin',
       'OmarES',
       'Dalia'
