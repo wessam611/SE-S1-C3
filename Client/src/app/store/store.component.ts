@@ -15,6 +15,10 @@ export class StoreComponent implements OnInit {
   currencyPipe = new CurrencyPipe('en-EN');
   products: Product[];
 
+  sellers: String[];
+  
+  
+
   settings = {
     delete: {
       confirmDelete: true,
@@ -96,6 +100,13 @@ export class StoreComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.sellers = [
+      'Wessam',
+      'Maqarious',
+      'Nesrin',
+      'OmarES',
+      'Dalia'
+    ];
     this.getProducts();
   }
 
@@ -128,7 +139,7 @@ export class StoreComponent implements OnInit {
     var returnValue = [];
     for(var i = 0; i<products.length; i++){
       var product = products[i];
-      if (product.sellerName == 'Wessam'){
+      if (this.sellers.indexOf(product.sellerName) >= 0){
         returnValue.push(product);
       }
     }
